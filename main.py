@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
 import re
+import sys
+import argparse
+import os
+import importlib
 
 def load_scheme(scheme_name): # TODO load by file path
     schema = []
 
-    import os
     this_file_dir_path = os.path.dirname(os.path.realpath(__file__))
     schema_path = f"{this_file_dir_path}/schemas/{scheme_name}.py"
     if (not os.path.isfile(schema_path)):
@@ -13,7 +16,6 @@ def load_scheme(scheme_name): # TODO load by file path
         # TODO log error and exit
 
     schema_import = f"schemas.{scheme_name}"
-    import importlib
     module = importlib.import_module(schema_import)
 
     schema = module.scheme
@@ -39,8 +41,6 @@ def process(content, schema, verbose=False):
         print(output_line)
 
 def parse_args():
-    import argparse
-
     parser = argparse.ArgumentParser(
         prog="colorme",
         description="Offers an extensive stdin/file-content replace mechanism"'\n'
@@ -55,7 +55,6 @@ def parse_args():
     return parser.parse_args()
 
 def main():
-    import sys
     args = parse_args()
     schema = load_scheme(args.schema)
     if args.filename:
