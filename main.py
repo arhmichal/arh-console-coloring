@@ -57,12 +57,12 @@ def parse_args():
 def main():
     import sys
     args = parse_args()
-    schema = load_scheme(args.schema)
+    print(type(args.verbose), args.verbose)
     if args.filename:
-        with open(args.filename) as content:
-            process(content, schema)
-    elif not sys.stdin.isatty():
-        process(sys.stdin, schema)
+        with open(args.filename) as fileinput:
+            process(fileinput, args.schema)
+    else:
+        process(sys.stdin, args.schema)
 
 if __name__ == "__main__":
     main()
