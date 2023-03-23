@@ -38,22 +38,32 @@ def process(content, schema):
         output_line = apply_schema(line, schema)
         print(output_line)
 
+def parse_args():
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        prog="colorme",
+        description="Offers an extensive stdin/file-content replace mechanism"'\n'
+                    "using a python file with replace rules"'\n'
+                    "for the main purpose of colloring console output.",
+    )
+    parser.add_argument("-s", "--schema", nargs=1, required=True,
+                        help="name of a *.py file but without '.py' extension that contains schema definition")
+    parser.add_argument("-v", "--verbose", default=False, action="store_true")
+    parser.add_argument("filename", nargs="?", help="file name/path to read as input")
+
+    return parser.parse_args()
 
 def main():
     schema = load_scheme("tmp1")
 
-    import argparse, sys
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('filename', nargs='?')
-    args = parser.parse_args()
+    import sys
+    args = parse_args()
     if args.filename:
         with open(args.filename) as content:
             process(content, schema)
     elif not sys.stdin.isatty():
         process(sys.stdin, schema)
-    else:
-        parser.print_help()
 
 if __name__ == "__main__":
     main()
