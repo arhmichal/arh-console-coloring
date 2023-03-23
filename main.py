@@ -47,7 +47,7 @@ def parse_args():
                     "using a python file with replace rules"'\n'
                     "for the main purpose of colloring console output.",
     )
-    parser.add_argument("-s", "--schema", nargs=1, required=True,
+    parser.add_argument("-s", "--schema", required=True,
                         help="name of a *.py file but without '.py' extension that contains schema definition")
     parser.add_argument("-v", "--verbose", default=False, action="store_true")
     parser.add_argument("filename", nargs="?", help="file name/path to read as input")
@@ -55,10 +55,9 @@ def parse_args():
     return parser.parse_args()
 
 def main():
-    schema = load_scheme("tmp1")
-
     import sys
     args = parse_args()
+    schema = load_scheme(args.schema)
     if args.filename:
         with open(args.filename) as content:
             process(content, schema)
