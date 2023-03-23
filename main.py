@@ -2,7 +2,7 @@
 
 import re
 
-def load_scheme(scheme_name):
+def load_scheme(scheme_name): # TODO load by file path
     schema = []
 
     import os
