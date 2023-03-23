@@ -29,7 +29,7 @@ def apply_schema(line, schema):
             break
     return new_line
 
-def process(content, schema):
+def process(content, schema, verbose=False):
     line = ""
     while True:
         line = content.readline()
@@ -57,12 +57,12 @@ def parse_args():
 def main():
     import sys
     args = parse_args()
-    print(type(args.verbose), args.verbose)
+    schema = load_scheme(args.schema)
     if args.filename:
         with open(args.filename) as fileinput:
-            process(fileinput, args.schema)
+            process(fileinput, schema, args.verbose)
     else:
-        process(sys.stdin, args.schema)
+        process(sys.stdin, schema, args.verbose)
 
 if __name__ == "__main__":
     main()
