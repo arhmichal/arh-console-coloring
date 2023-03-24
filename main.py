@@ -25,9 +25,8 @@ def apply_schema(line, schema):
     new_line = line
     num_of_replaces = 0
     for rule in schema:
-        (_, pattern), (_, replace), (_, final) = rule.items()
-        new_line, num_of_replaces = re.subn(pattern, replace, new_line)
-        if (final and num_of_replaces > 0):
+        new_line, num_of_replaces = re.subn(rule["pattern"], rule["replace"], new_line)
+        if ("final" in rule and rule["final"] and num_of_replaces > 0):
             break
     return new_line
 

@@ -45,9 +45,6 @@ class BgColor(enum.Enum):
     Cyan=encode(46)
     Grey=encode(47)
 
-def color_this(text, *args) -> str:
+def format(text, *args) -> str:
     stringified = list(map(enum2str, args))
     return "".join(stringified) + text + encode(0)
-
-print(color_this("ala"))
-print(color_this("ala", BgColor.Red, Format.Bold))
