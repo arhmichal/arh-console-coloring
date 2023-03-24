@@ -33,7 +33,7 @@ def apply_schema(line, schema):
 def process(content, schema, verbose=False):
     line = ""
     while True:
-        line = content.readline()
+        line = content.readline()[:-1]
         if not line:
             break
         output_line = apply_schema(line, schema)
