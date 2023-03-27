@@ -47,7 +47,7 @@ def parse_args():
                     "using a python file with replace rules"'\n'
                     "for the main purpose of colloring console output.",
     )
-    parser.add_argument("-s", "--schema", required=True,
+    parser.add_argument("-s", "--schema", required=True, nargs="+",
                         help="name of a *.py file but without '.py' extension that contains schema definition")
     parser.add_argument("-v", "--verbose", default=False, action="store_true")
     parser.add_argument("-t", "--timeit", default=False, action="store_true")
@@ -59,7 +59,10 @@ def main():
     starttime = timeit.default_timer()
     
     args = parse_args()
-    schema = load_scheme(args.schema)
+    
+    schema = []
+    for schema_name in args.schema:
+        schema.extend(load_scheme(schema_name))
     if args.filename:
         with open(args.filename) as fileinput:
             process(fileinput, schema, args.verbose)
