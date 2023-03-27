@@ -7,7 +7,7 @@ r_path = "/{0,2}("+r_name+"/{1,2})+"
 
 compiler_flags = [
     { "pattern": re.compile(f"-(W)({r_name})"), 
-      "replace": cc.format(r"-\1", cc.Color.White) + cc.format(r"\2", cc.Color.Yellow, cc.Format.Light)},
+      "replace": cc.format(r"-\1", cc.Color.White) + cc.format(r"\2", cc.Color.Red)},
     { "pattern": re.compile(f"-(f)({r_name})"), 
       "replace": cc.format(r"-\1", cc.Color.White) + cc.format(r"\2", cc.Color.Blue, cc.Format.Light)},
     { "pattern": re.compile(f"-(l)({r_name})(?=\\s|$)"),
