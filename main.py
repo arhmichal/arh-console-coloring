@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import timeit
 import re
 import sys
 import argparse
@@ -49,11 +50,14 @@ def parse_args():
     parser.add_argument("-s", "--schema", required=True,
                         help="name of a *.py file but without '.py' extension that contains schema definition")
     parser.add_argument("-v", "--verbose", default=False, action="store_true")
+    parser.add_argument("-t", "--timeit", default=False, action="store_true")
     parser.add_argument("filename", nargs="?", help="file name/path to read as input")
 
     return parser.parse_args()
 
 def main():
+    starttime = timeit.default_timer()
+    
     args = parse_args()
     schema = load_scheme(args.schema)
     if args.filename:
@@ -61,6 +65,9 @@ def main():
             process(fileinput, schema, args.verbose)
     else:
         process(sys.stdin, schema, args.verbose)
+    
+    if (args.timeit):
+        print("Time spent:", timeit.default_timer() - starttime)
 
 if __name__ == "__main__":
     main()
