@@ -48,7 +48,7 @@ def parse_args():
                     "for the main purpose of colloring console output.",
     )
     parser.add_argument("-s", "--schema", required=True, nargs="+",
-                        help="name of a *.py file but without '.py' extension that contains schema definition")
+                        help="name of a *.py file but without '.py' extension that contains schema definition. can use multiple schemas.")
     parser.add_argument("-v", "--verbose", default=False, action="store_true")
     parser.add_argument("-t", "--timeit", default=False, action="store_true")
     parser.add_argument("filename", nargs="?", help="file name/path to read as input")
