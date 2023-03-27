@@ -2,6 +2,7 @@ import re
 import schemas.definitions.console_colors as cc
 
 r_name = r"[\w.+-]+"
+r_path_can_be_empty = "/{0,2}("+r_name+"/{1,2})*"
 r_path = "/{0,2}("+r_name+"/{1,2})+"
 
 compiler_flags = [
@@ -25,18 +26,16 @@ compiler_flags = [
 ]
 
 files_patterns = [
-    { "pattern": re.compile(r"(\b"+r_path+r_name+r"\.(o|d|so)\b)"),
+    { "pattern": re.compile(r"(\b"+r_path_can_be_empty+r_name+r"\.(o|d|so)\b)"),
       "replace": cc.format(r"\1", cc.Format.Dark, cc.Color.Grey)},
-    { "pattern": re.compile(r"(\b"+r_path+r_name+r"\.(cpp|cc|c|hpp|hh|h)\b)"),
+    { "pattern": re.compile(r"(\b"+r_path_can_be_empty+r_name+r"\.(cpp|cc|c|hpp|hh|h)\b)"),
       "replace": cc.format(r"\1", cc.Color.Green)},
 ]
 
 binaries_patterns = [
-    { "pattern": re.compile(r"(^/[\w/\.]*/protoc\b)"),
+    { "pattern": re.compile(r"(^/[\w/\.]*/((protoc|cpp|gcc)\b|g\+\+))"),
       "replace": cc.format(r"\1", cc.Format.Light, cc.Color.Green)},
-    { "pattern": re.compile(r"(^/[\w/\.]*/cpp\b)"),
-      "replace": cc.format(r"\1", cc.Format.Light, cc.Color.Green)},
-    { "pattern": re.compile(r"\b(make|mkdir|cp|mv|rm|chmod|sed|grep|cat)\b"),
+    { "pattern": re.compile(r"\b(make|mkdir|cp|mv|rm|chmod|sed|grep|cat|cd)\b"),
       "replace": cc.format(r"\1", cc.Format.Light, cc.Color.Yellow)},
 ]
 
