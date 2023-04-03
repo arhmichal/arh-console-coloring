@@ -13,7 +13,7 @@ def load_scheme(scheme_name): # TODO load by file path
     this_file_dir_path = os.path.dirname(os.path.realpath(__file__))
     schema_path = f"{this_file_dir_path}/schemas/{scheme_name}.py"
     if (not os.path.isfile(schema_path)):
-        raise Exception(f"Sorry, no file {schema_path}")
+        raise Exception(f"load_scheme({scheme_name}): Sorry, no file {schema_path}")
         # TODO log error and exit
 
     schema_import = f"schemas.{scheme_name}"
@@ -51,7 +51,7 @@ def parse_args():
                         help="name of a *.py file but without '.py' extension that contains schema definition. can use multiple schemas.")
     parser.add_argument("-v", "--verbose", default=False, action="store_true")
     parser.add_argument("-t", "--timeit", default=False, action="store_true")
-    parser.add_argument("filename", nargs="?", help="file name/path to read as input")
+    parser.add_argument("-f", "--filename", nargs="?", help="file name/path to read as input")
 
     return parser.parse_args()
 
@@ -64,9 +64,14 @@ def main():
     for schema_name in args.schema:
         schema.extend(load_scheme(schema_name))
     if args.filename:
+        # TODO log instead of print
+        if args.verbose:
+            print(f"main(): args.filename={args.filename}")
         with open(args.filename) as fileinput:
             process(fileinput, schema, args.verbose)
     else:
+        if args.verbose:
+            print(f"main(): no filename - using stdin")
         process(sys.stdin, schema, args.verbose)
     
     if (args.timeit):
