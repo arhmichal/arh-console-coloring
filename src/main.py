@@ -34,9 +34,12 @@ def apply_schema(line, schema):
 def process(content, schema, verbose=False):
     line = ""
     while True:
-        line = content.readline()[:-1]
+        line = content.readline()
         if not line:
             break
+        if len(line) > 0 and line[-1] == "\n":
+            line = line[:-1]
+
         output_line = apply_schema(line, schema)
         print(output_line)
 
